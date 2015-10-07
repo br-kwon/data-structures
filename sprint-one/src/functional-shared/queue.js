@@ -23,6 +23,7 @@ var queueMethods = {
     var result;
     if(this.length > 0){
       result = this.storage[this.offset];
+      delete this.storage[this.offset];
       this.length--;
       this.offset++;
     }

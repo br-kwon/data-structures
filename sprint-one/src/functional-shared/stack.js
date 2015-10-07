@@ -28,6 +28,7 @@ var stackMethods = {
     var result;
     if (this.length > 0) {
       result = this.storage[this.length - 1];
+      delete this.storage[this.length - 1];
       this.length--;
     }
     return result;
