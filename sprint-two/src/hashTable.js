@@ -10,9 +10,18 @@ HashTable.prototype.insert = function(k, v) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   var bucket = this._storage.get(index) || [];
 
-  bucket.push([k, v]);
+  var previous;
+  _.each(bucket, function(tuple){
+    if(tuple[0] === k){
+      previous = tuple[1];
+      tuple[1] = v;
+    }
+  });
+  if(!previous){
+    bucket.push([k,v]);
+  }
+
   this._storage.set(index, bucket);
-  
   this.numTuples++;
   
   if(this.needsDoubling()){
@@ -20,6 +29,7 @@ HashTable.prototype.insert = function(k, v) {
     this.reHashStorage();
   }
 
+  return previous || true;
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -37,6 +47,8 @@ HashTable.prototype.retrieve = function(k) {
 
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
+
+  //could use .get
   this._storage.each(function(bucket, i, storage){
     if(i === index){
       _.each(bucket, function(tuple, bucketIndex) {
@@ -63,6 +75,7 @@ HashTable.prototype.reHashStorage = function(){
     })
   })
 }
+
 
 
 /*
