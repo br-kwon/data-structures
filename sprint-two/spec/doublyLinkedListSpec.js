@@ -66,10 +66,33 @@ describe('doublyLinkedList', function(){
     });
   });
 
+  describe('retrieve', function(){
+    it('should return value at correct index', function(){
+      expect(threeItemLinkedList.retrieve(1)).to.equal(6);
+      expect(threeItemLinkedList.retrieve(0)).to.equal(5);
+
+    });
+
+    it('should return null for index greater than equal to length', function(){
+      expect(threeItemLinkedList.retrieve(3)).to.equal(null);
+    });
+  });
+
   describe('insert', function(){
     it('should insert value at correct index', function(){
-      
+      threeItemLinkedList.insert(8, 1);
+      expect(threeItemLinkedList.retrieve(1)).to.equal(8);
     });
+
+    it('should assign next and correctly for inserted node', function() {
+      threeItemLinkedList.insert(8, 1);
+      expect(threeItemLinkedList.retrieve(2)).to.equal(6);
+    })
+
+    it('should update head when inserting at index 0', function() {
+      threeItemLinkedList.insert(8, 0);
+      expect(threeItemLinkedList.head.value).to.equal(8);
+    })
   });
 
 });
