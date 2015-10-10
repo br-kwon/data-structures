@@ -69,4 +69,12 @@ describe('hashTable', function() {
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
   });
+
+  it ('should not halve in size before reaching threshold', function() {
+    hashTable.insert('key1', 'val1');
+    expect(hashTable._limit).to.equal(8);
+    hashTable.insert('key2', 'val2');
+    hashTable.remove('key1');
+    expect(hashTable._limit).to.equal(4);
+  });
 });
